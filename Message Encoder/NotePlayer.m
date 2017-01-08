@@ -8,16 +8,25 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 #import "NotePlayer.h"
+static const NSUInteger kFramesPerNote = 44100/4;
 
 @implementation NotePlayer
 
 {
     AudioUnit outputUnit;
     double renderPhase;
+    NSString * _notes;
+    NSUInteger _currentNote;
+    NSUInteger _framesRemaining;
 }
 
 - (void)play:(NSString *) notes
 {
+    [self stopSound];
+    _notes = notes;
+    _currentNote = 0;
+    _framesRemaining = kFramesPerNote;
+    
     //  First, we need to establish which Audio Unit we want.
     
     //  We start with its description, which is:
@@ -65,7 +74,7 @@
     //  the current phase of the sine wave we're creating.
     AURenderCallbackStruct callbackInfo = {
         .inputProc       = SineWaveRenderCallback,
-        .inputProcRefCon = &renderPhase
+        .inputProcRefCon = (__bridge void *)self
     };
     
     AudioUnitSetProperty(outputUnit,
@@ -90,15 +99,20 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
                                 UInt32 inNumberFrames,
                                 AudioBufferList * ioData)
 {
+    __unsafe_unretained NotePlayer * THIS = (__bridge NotePlayer *)inRefCon;
     // inRefCon is the context pointer we passed in earlier when setting the render callback
-    double currentPhase = *((double *)inRefCon);
+    double currentPhase = THIS->renderPhase;
     // ioData is where we're supposed to put the audio samples we've created
     Float32 * outputBuffer = (Float32 *)ioData->mBuffers[0].mData;
-    const double frequency = 440.;
+    char note = [THIS->_notes characterAtIndex:THIS->_currentNote];
+    static const double noteFrequencies [] = {
+        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99
+    };
+    const double frequency = noteFrequencies[note-'a'];
     const double phaseStep = (frequency / 44100.) * (M_PI * 2.);
     
     for(int i = 0; i < inNumberFrames; i++) {
-        outputBuffer[i] = sin(currentPhase);
+        outputBuffer[i] = sin(currentPhase)*0.02;
         currentPhase += phaseStep;
     }
     
@@ -109,16 +123,18 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     }
     
     // writing the current phase back to inRefCon so we can use it on the next call
-    *((double *)inRefCon) = currentPhase;
+    THIS->renderPhase = currentPhase;
     return noErr;
 }
 
 - (void)stopSound
 {
-    AudioOutputUnitStop(outputUnit);
-    AudioUnitUninitialize(outputUnit);
-    AudioComponentInstanceDispose(outputUnit);
+    if (outputUnit) {
+        AudioOutputUnitStop(outputUnit);
+        AudioUnitUninitialize(outputUnit);
+        AudioComponentInstanceDispose(outputUnit);
+        outputUnit = nil;
+    }
 }
-
 
 @end
