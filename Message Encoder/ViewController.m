@@ -7,16 +7,19 @@
 //
 
 #import "ViewController.h"
+#import "Encoder.h"
 
 @interface ViewController ()
 
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    Encoder * _encoder;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    _encoder = [[Encoder alloc] init];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -33,7 +36,10 @@
 }
 
 - (void)sendMessage:(NSString *)message {
+    NSString * encodedMessage = [_encoder encodeMessage:message];
     NSLog(@"The Message Is %@", message);
+    NSLog(@"The Encoded Message Is %@", encodedMessage);
 }
+
 
 @end

@@ -13,6 +13,7 @@
 		0485E2C11E21C25E0019BB6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0485E2BF1E21C25E0019BB6D /* Main.storyboard */; };
 		0485E2C31E21C25E0019BB6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0485E2C21E21C25E0019BB6D /* Assets.xcassets */; };
 		0485E2C61E21C25E0019BB6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0485E2C41E21C25E0019BB6D /* LaunchScreen.storyboard */; };
+		0485E2CF1E21D0B40019BB6D /* Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485E2CE1E21D0B40019BB6D /* Encoder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		0485E2C21E21C25E0019BB6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0485E2C51E21C25E0019BB6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0485E2C71E21C25E0019BB6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0485E2CD1E21D0B40019BB6D /* Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encoder.h; sourceTree = "<group>"; };
+		0485E2CE1E21D0B40019BB6D /* Encoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encoder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 				0485E2C41E21C25E0019BB6D /* LaunchScreen.storyboard */,
 				0485E2C71E21C25E0019BB6D /* Info.plist */,
 				0485E2B61E21C25E0019BB6D /* Supporting Files */,
+				0485E2CD1E21D0B40019BB6D /* Encoder.h */,
+				0485E2CE1E21D0B40019BB6D /* Encoder.m */,
 			);
 			path = "Message Encoder";
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0485E2CF1E21D0B40019BB6D /* Encoder.m in Sources */,
 				0485E2BE1E21C25E0019BB6D /* ViewController.m in Sources */,
 				0485E2BB1E21C25E0019BB6D /* AppDelegate.m in Sources */,
 				0485E2B81E21C25E0019BB6D /* main.m in Sources */,
