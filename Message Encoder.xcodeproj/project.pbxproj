@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04859D231E22BA1A00E6580C /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 04859D221E22BA1A00E6580C /* NotePlayer.m */; };
 		0485E2B81E21C25E0019BB6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485E2B71E21C25E0019BB6D /* main.m */; };
 		0485E2BB1E21C25E0019BB6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485E2BA1E21C25E0019BB6D /* AppDelegate.m */; };
 		0485E2BE1E21C25E0019BB6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485E2BD1E21C25E0019BB6D /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04859D211E22BA1A00E6580C /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
+		04859D221E22BA1A00E6580C /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		0485E2B31E21C25E0019BB6D /* Message Encoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Message Encoder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0485E2B71E21C25E0019BB6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0485E2B91E21C25E0019BB6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 				0485E2B61E21C25E0019BB6D /* Supporting Files */,
 				0485E2CD1E21D0B40019BB6D /* Encoder.h */,
 				0485E2CE1E21D0B40019BB6D /* Encoder.m */,
+				04859D211E22BA1A00E6580C /* NotePlayer.h */,
+				04859D221E22BA1A00E6580C /* NotePlayer.m */,
 			);
 			path = "Message Encoder";
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 				0485E2CF1E21D0B40019BB6D /* Encoder.m in Sources */,
 				0485E2BE1E21C25E0019BB6D /* ViewController.m in Sources */,
 				0485E2BB1E21C25E0019BB6D /* AppDelegate.m in Sources */,
+				04859D231E22BA1A00E6580C /* NotePlayer.m in Sources */,
 				0485E2B81E21C25E0019BB6D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +324,7 @@
 				0485E2CC1E21C25E0019BB6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

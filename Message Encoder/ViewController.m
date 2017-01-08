@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Encoder.h"
+#import "NotePlayer.h"
 
 @interface ViewController ()
 
@@ -15,11 +16,13 @@
 
 @implementation ViewController {
     Encoder * _encoder;
+    NotePlayer * _notePlayer;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _encoder = [[Encoder alloc] init];
+    _notePlayer = [[NotePlayer alloc] init];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -39,6 +42,7 @@
     NSString * encodedMessage = [_encoder encodeMessage:message];
     NSLog(@"The Message Is %@", message);
     NSLog(@"The Encoded Message Is %@", encodedMessage);
+    [_notePlayer play:encodedMessage];
 }
 
 

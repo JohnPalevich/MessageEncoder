@@ -79,7 +79,7 @@
         }
         [encodedMessage appendString:encodedLetter];
     }
-    return encodedMessage;
+    return  encodedMessage;
 }
 
 
