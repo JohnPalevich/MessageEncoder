@@ -18,14 +18,15 @@ static const NSUInteger kFramesPerNote = 44100/4;
     NSString * _notes;
     NSUInteger _currentNote;
     NSUInteger _framesRemaining;
+    double _phaseStep;
 }
 
 - (void)play:(NSString *) notes
 {
     [self stopSound];
     _notes = notes;
-    _currentNote = 0;
-    _framesRemaining = kFramesPerNote;
+    [self startNote:0];
+    
     
     //  First, we need to establish which Audio Unit we want.
     
@@ -104,16 +105,16 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     double currentPhase = THIS->renderPhase;
     // ioData is where we're supposed to put the audio samples we've created
     Float32 * outputBuffer = (Float32 *)ioData->mBuffers[0].mData;
-    char note = [THIS->_notes characterAtIndex:THIS->_currentNote];
-    static const double noteFrequencies [] = {
-        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99
-    };
-    const double frequency = noteFrequencies[note-'a'];
-    const double phaseStep = (frequency / 44100.) * (M_PI * 2.);
+    memset(outputBuffer, 0, ioData->mBuffers[0].mDataByteSize);
+    if(THIS->_phaseStep == 0)
+    {
+        return noErr;
+    }
+    NSUInteger framesMixed = MIN(inNumberFrames, THIS->_framesRemaining);
     
-    for(int i = 0; i < inNumberFrames; i++) {
-        outputBuffer[i] = sin(currentPhase)*0.02;
-        currentPhase += phaseStep;
+    for(int i = 0; i < framesMixed; i++) {
+        outputBuffer[i] = sin(currentPhase);
+        currentPhase += THIS->_phaseStep;
     }
     
     // If we were doing stereo (or more), this would copy our sine wave samples
@@ -121,7 +122,11 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     for(int i = 1; i < ioData->mNumberBuffers; i++) {
         memcpy(ioData->mBuffers[i].mData, outputBuffer, ioData->mBuffers[i].mDataByteSize);
     }
-    
+    THIS->_framesRemaining -= framesMixed;
+    if(THIS->_framesRemaining ==0)
+    {
+        [THIS startNote:THIS -> _currentNote + 1];
+    }
     // writing the current phase back to inRefCon so we can use it on the next call
     THIS->renderPhase = currentPhase;
     return noErr;
@@ -135,6 +140,24 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
         AudioComponentInstanceDispose(outputUnit);
         outputUnit = nil;
     }
+}
+
+- (void)startNote:(NSUInteger) placeInString
+{
+    _framesRemaining = kFramesPerNote;
+    _currentNote = placeInString;
+    if(_currentNote >= _notes.length)
+    {
+        _phaseStep = 0;
+        _framesRemaining = 0;
+        return;
+    }
+    char note = [_notes characterAtIndex:_currentNote];
+    static const double noteFrequencies [] = {
+        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99
+    };
+    const double frequency = noteFrequencies[note-'a'];
+    _phaseStep = (frequency / 44100.) * (M_PI * 2.);
 }
 
 @end
