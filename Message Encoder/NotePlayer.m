@@ -9,6 +9,8 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "NotePlayer.h"
 static const NSUInteger kFramesPerNote = 44100/4;
+static const NSString * kStart = @"h";
+static const NSString * kStop = @"h";
 
 @implementation NotePlayer
 
@@ -24,7 +26,7 @@ static const NSUInteger kFramesPerNote = 44100/4;
 - (void)play:(NSString *) notes
 {
     [self stopSound];
-    _notes = notes;
+    _notes = [NSString stringWithFormat:@"%@%@%@",kStart,notes,kStop];
     [self startNote:0];
     
     
