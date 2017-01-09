@@ -10,7 +10,7 @@
 #import "NotePlayer.h"
 static const NSUInteger kFramesPerNote = 44100/4;
 static const NSString * kStart = @"h";
-static const NSString * kStop = @"h";
+static const NSString * kStop = @"i";
 
 @implementation NotePlayer
 
@@ -158,7 +158,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     }
     char note = [_notes characterAtIndex:_currentNote];
     static const double noteFrequencies [] = {
-        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.0
+        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.0, 987.76
     };
     const double frequency = noteFrequencies[note-'a'];
     _phaseStep = (frequency / 44100.) * (M_PI * 2.);
