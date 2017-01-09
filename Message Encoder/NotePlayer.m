@@ -106,26 +106,28 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     // ioData is where we're supposed to put the audio samples we've created
     Float32 * outputBuffer = (Float32 *)ioData->mBuffers[0].mData;
     memset(outputBuffer, 0, ioData->mBuffers[0].mDataByteSize);
-    if(THIS->_phaseStep == 0)
-    {
-        return noErr;
-    }
-    NSUInteger framesMixed = MIN(inNumberFrames, THIS->_framesRemaining);
-    
-    for(int i = 0; i < framesMixed; i++) {
-        outputBuffer[i] = sin(currentPhase);
-        currentPhase += THIS->_phaseStep;
-    }
-    
-    // If we were doing stereo (or more), this would copy our sine wave samples
-    // to all of the remaining channels
-    for(int i = 1; i < ioData->mNumberBuffers; i++) {
-        memcpy(ioData->mBuffers[i].mData, outputBuffer, ioData->mBuffers[i].mDataByteSize);
-    }
-    THIS->_framesRemaining -= framesMixed;
-    if(THIS->_framesRemaining ==0)
-    {
-        [THIS startNote:THIS -> _currentNote + 1];
+    NSUInteger framesToMix = inNumberFrames;
+    for(;;){
+        if(THIS->_phaseStep == 0)
+        {
+            break;
+        }
+        NSUInteger framesMixed = MIN(framesToMix, THIS->_framesRemaining);
+        
+        for(int i = 0; i < framesMixed; i++) {
+            outputBuffer[i] = sin(currentPhase)*0.5;
+            currentPhase += THIS->_phaseStep;
+        }
+        THIS->_framesRemaining -= framesMixed;
+        framesToMix -= framesMixed;
+        if(THIS->_framesRemaining ==0)
+        {
+            [THIS startNote:THIS -> _currentNote + 1];
+        }
+        else
+        {
+            break;
+        }
     }
     // writing the current phase back to inRefCon so we can use it on the next call
     THIS->renderPhase = currentPhase;
@@ -154,7 +156,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     }
     char note = [_notes characterAtIndex:_currentNote];
     static const double noteFrequencies [] = {
-        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99
+        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.0
     };
     const double frequency = noteFrequencies[note-'a'];
     _phaseStep = (frequency / 44100.) * (M_PI * 2.);
