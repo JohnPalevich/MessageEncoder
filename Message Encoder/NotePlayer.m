@@ -159,7 +159,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     }
     char note = [_notes characterAtIndex:_currentNote];
     static const double noteFrequencies [] = {
-        261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 880.0, 987.76
+        440.00, 493.88, 261.63, 293.66, 329.63, 349.23, 392.00, 880.0, 987.76
     };
     double frequency;
     if(note == ' ')

@@ -16,38 +16,38 @@
 {
     self=[super init];
     if (self) {
-        _charMap = @{@"A":@"ab",
-                     @"B":@"ac",
-                     @"C":@"ad",
-                     @"D":@"ae",
-                     @"E":@"af",
-                     @"F":@"ag",
-                     @"G":@"ba",
-                     @"H":@"bc",
-                     @"I":@"bd",
-                     @"J":@"be",
-                     @"K":@"bf",
-                     @"L":@"bg",
-                     @"M":@"ca",
-                     @"N":@"cb",
-                     @"O":@"cd",
-                     @"P":@"ce",
-                     @"Q":@"cf",
-                     @"R":@"cg",
-                     @"S":@"da",
-                     @"T":@"db",
-                     @"U":@"dc",
-                     @"V":@"de",
-                     @"W":@"df",
-                     @"X":@"dg",
-                     @"Y":@"ea",
-                     @"Z":@"eb",
-                     @" ":@"ec",
-                     @".":@"ed",
-                     @",":@"ef",
-                     @"!":@"eg",
-                     @"?":@"fa",
-                     @"*":@"fb",
+        _charMap = @{@"A":@"cd",
+                     @"B":@"ce",
+                     @"C":@"cf",
+                     @"D":@"cg",
+                     @"E":@"ca",
+                     @"F":@"cb",
+                     @"G":@"dc",
+                     @"H":@"de",
+                     @"I":@"df",
+                     @"J":@"dg",
+                     @"K":@"da",
+                     @"L":@"db",
+                     @"M":@"ec",
+                     @"N":@"ed",
+                     @"O":@"ef",
+                     @"P":@"eg",
+                     @"Q":@"ea",
+                     @"R":@"eb",
+                     @"S":@"fc",
+                     @"T":@"fd",
+                     @"U":@"fe",
+                     @"V":@"fg",
+                     @"W":@"fa",
+                     @"X":@"fb",
+                     @"Y":@"gc",
+                     @"Z":@"gd",
+                     @" ":@"ge",
+                     @".":@"gf",
+                     @",":@"ga",
+                     @"!":@"gb",
+                     @"?":@"ac",
+                     @"*":@"ad",
                      };
     }
     return self;
@@ -67,8 +67,9 @@
         {
             encodedLetter = _charMap[@"*"];
         }
-        [encodedMessage appendString:@" "];
+        
         [encodedMessage appendString:encodedLetter];
+        [encodedMessage appendString:@" "];
     }
     return  encodedMessage;
 }
