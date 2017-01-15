@@ -10,6 +10,9 @@
 #import "NotePlayer.h"
 #import <AudioToolbox/AudioToolbox.h>
 static const NSUInteger kFramesPerNote = 44100/4;
+static const NSUInteger kAttackFrames = 128;
+static const NSUInteger kDecayFrames = 128;
+static const NSUInteger kDecayStartFrames = kFramesPerNote - kDecayFrames;
 static const NSString * kStart = @"h";
 static const NSString * kStop = @"i";
 
@@ -110,6 +113,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     Float32 * outputBuffer = (Float32 *)ioData->mBuffers[0].mData;
     memset(outputBuffer, 0, ioData->mBuffers[0].mDataByteSize);
     NSUInteger framesToMix = inNumberFrames;
+    int j = 0;
     for(;;){
         if(THIS->_phaseStep == 0)
         {
@@ -117,9 +121,26 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
         }
         NSUInteger framesMixed = MIN(framesToMix, THIS->_framesRemaining);
         
+        NSUInteger baseFrame = kFramesPerNote - THIS -> _framesRemaining;
         for(int i = 0; i < framesMixed; i++) {
-            outputBuffer[i] = sin(currentPhase)*0.5;
+            outputBuffer[j] = sin(fmod(currentPhase, M_PI * 2));
             currentPhase += THIS->_phaseStep;
+            NSUInteger currentFrame = baseFrame + i;
+            
+            if(currentFrame <= kAttackFrames)
+            {
+                float scaleFactor = (float) currentFrame / kAttackFrames;
+                outputBuffer [j] *= scaleFactor;
+            }
+            else if(currentFrame >= kDecayStartFrames)
+            {
+                
+                NSUInteger decayFrame = kFramesPerNote - currentFrame - 1;
+                float scaleFactor = (float) decayFrame / kDecayFrames;
+                outputBuffer [j] *= scaleFactor;
+            }
+            // NSLog(@"%u %d %g" , currentFrame, j, outputBuffer[j]);
+            j ++;
         }
         THIS->_framesRemaining -= framesMixed;
         framesToMix -= framesMixed;
