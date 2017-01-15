@@ -6,8 +6,9 @@
 //  Copyright © 2017 Jack Palevich. All rights reserved.
 //
 
-#import <AudioToolbox/AudioToolbox.h>
+
 #import "NotePlayer.h"
+#import <AudioToolbox/AudioToolbox.h>
 static const NSUInteger kFramesPerNote = 44100/4;
 static const NSString * kStart = @"h";
 static const NSString * kStop = @"i";
@@ -158,9 +159,17 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     }
     char note = [_notes characterAtIndex:_currentNote];
     static const double noteFrequencies [] = {
-        440.0, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.0, 987.76
+        261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 880.0, 987.76
     };
-    const double frequency = noteFrequencies[note-'a'];
+    double frequency;
+    if(note == ' ')
+    {
+        frequency  = 783.99;
+    }
+    else
+    {
+        frequency = noteFrequencies[note-'a'];
+    }
     _phaseStep = (frequency / 44100.) * (M_PI * 2.);
 }
 
