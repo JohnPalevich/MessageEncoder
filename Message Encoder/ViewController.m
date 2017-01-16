@@ -6,6 +6,7 @@
 //  Copyright © 2017 Jack Palevich. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "ViewController.h"
 #import "Encoder.h"
 #import "NotePlayer.h"
@@ -20,6 +21,9 @@
 }
 
 - (void)viewDidLoad {
+    [AVAudioSession sharedInstance];
+    BOOL activated = [[AVAudioSession sharedInstance] setActive:YES error:NULL];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:NULL];
     [super viewDidLoad];
     _encoder = [[Encoder alloc] init];
     _notePlayer = [[NotePlayer alloc] init];
