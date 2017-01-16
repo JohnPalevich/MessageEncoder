@@ -9,7 +9,7 @@
 
 #import "NotePlayer.h"
 #import <AudioToolbox/AudioToolbox.h>
-static const NSUInteger kFramesPerNote = 44100/16;
+static const NSUInteger kFramesPerNote = 2048*4;
 static const NSUInteger kAttackFrames = 128;
 static const NSUInteger kDecayFrames = 128;
 static const NSUInteger kDecayStartFrames = kFramesPerNote - kDecayFrames;
