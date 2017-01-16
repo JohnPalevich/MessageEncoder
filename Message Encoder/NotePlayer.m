@@ -123,7 +123,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
         
         NSUInteger baseFrame = kFramesPerNote - THIS -> _framesRemaining;
         for(int i = 0; i < framesMixed; i++) {
-            outputBuffer[j] = sin(fmod(currentPhase, M_PI * 2));
+            outputBuffer[j] = sin(fmod(currentPhase, M_PI * 2))*0.5;
             currentPhase += THIS->_phaseStep;
             NSUInteger currentFrame = baseFrame + i;
             
