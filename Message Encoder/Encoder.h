@@ -10,6 +10,5 @@
 
 @interface Encoder : NSObject
 - (NSString *)encodeMessage:(NSString *)message;
-- (NSString *)decodeMessage:(NSString *)message;
 
 @end
