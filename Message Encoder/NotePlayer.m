@@ -191,7 +191,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     {
         frequency = noteFrequencies[note-'a'];
     }
-    _phaseStep = (frequency / 44100.) * (M_PI * 2.);
+    _phaseStep = (frequency / 44100.) * (M_PI * 2.)* 4;
 }
 
 @end
