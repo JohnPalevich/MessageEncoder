@@ -39,7 +39,7 @@
                      @"U":@"fe",
                      @"V":@"fg",
                      @"W":@"fa",
-                     @"X":@"fb",
+                     @"X":@"fb	",
                      @"Y":@"gc",
                      @"Z":@"gd",
                      @" ":@"ge",
@@ -55,8 +55,8 @@
 
 - (NSString *)encodeMessage:(NSString *)message
 {
-    NSMutableString * encodedMessage = [[NSMutableString alloc] init];
-    
+    NSMutableString * encodedMessage = [[NSMutableString alloc] init]; 
+
     NSUInteger messageLength = message.length;
     for(NSUInteger i = 0; i < messageLength; i++)
     {

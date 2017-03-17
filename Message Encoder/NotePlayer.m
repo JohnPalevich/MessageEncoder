@@ -30,7 +30,7 @@ static const NSString * kStop = @"i";
 - (void)play:(NSString *) notes
 {
     [self stopSound];
-    _notes = [NSString stringWithFormat:@"%@%@%@",kStart,notes,kStop];
+    _notes = [NSString stringWithFormat:@"%@%@%@%@",kStop,kStart,notes,kStop];
     [self startNote:0];
     
     
@@ -191,6 +191,7 @@ OSStatus SineWaveRenderCallback(void * inRefCon,
     {
         frequency = noteFrequencies[note-'a'];
     }
+    frequency *= 2;//raise everything 1 octave
     _phaseStep = (frequency / 44100.) * (M_PI * 2.)* 4;
 }
 
